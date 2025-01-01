@@ -6,6 +6,7 @@ import time
 import subprocess
 from datetime import datetime
 import openai
+import shlex
 
 # Define the list of repositories
 REPOSITORIES = [
@@ -70,7 +71,9 @@ def update_file(repo_path):
 
     # Commit the change
     commit_message = get_commit_message(repo_path)
-    run_command(["git", "commit", "-am", f'''{commit_message}'''], cwd=repo_path)
+    # Use shlex.quote to safely quote the commit message
+    safe_commit_message = shlex.quote(commit_message)
+    run_command(["git", "commit", "-am", safe_commit_message], cwd=repo_path)
 
 # Function to push changes
 def push_changes(repo_path):
