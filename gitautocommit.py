@@ -1,11 +1,11 @@
 #! /usr/bin/env python3
 
-
 import os
 import random
 import time
 import subprocess
 from datetime import datetime
+import openai
 
 # Define the list of repositories
 REPOSITORIES = [
@@ -22,6 +22,21 @@ def run_command(command, cwd=None):
     except subprocess.CalledProcessError as e:
         print(f"Error executing {' '.join(command)}: {e.stderr.strip()}")
         return None
+
+# Function to return a viable commit message that makes sense for this repository
+def get_commit_message(repo_path):
+    # Initialize the OpenAI client
+    client = openai.Client(api_key=os.getenv("OPENAI_API_KEY"))
+
+    # Use the new API method to create a chat completion
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that generates commit messages for git repositories."},
+            {"role": "user", "content": f"Generate a commit message for the repository at {repo_path}. The message should sound technical, perhaps even a little cryptic, but definitely a comment a terse engineer would make.  Swearing and the odd joke are okay."}
+        ]
+    )
+    return response.choices[0].message.content
 
 # Function to update the .UpdateStatus file
 def update_file(repo_path):
@@ -41,6 +56,7 @@ def update_file(repo_path):
             f.write(content)
             f.truncate()
 
+    print(get_commit_message(repo_path))
     # Commit the change
     run_command(["git", "commit", "-am", f"Update .UpdateStatus at {datetime.now()}"], cwd=repo_path)
 

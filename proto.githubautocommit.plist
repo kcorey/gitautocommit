@@ -9,6 +9,11 @@
       <!-- update so that the path is correct -->
       <string>/Users/kencorey/Developer/gitautocommit/gitautocommit.py</string>
     </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>OPENAI_API_KEY</key>
+        <string>your_openai_api_key_here</string>
+    </dict>
     <key>StartInterval</key>
     <integer>7200</integer>  <!-- Run every 12 hours -->
     <key>RunAtLoad</key>
