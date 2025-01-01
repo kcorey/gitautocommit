@@ -22,6 +22,7 @@ def run_command(command, cwd=None):
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"Error executing {' '.join(command)}: {e.stderr.strip()}")
+        print(f"Return code: {e.returncode}, Output: {e.stdout.strip()}")
         return None
 
 # Function to return a viable commit message that makes sense for this repository
