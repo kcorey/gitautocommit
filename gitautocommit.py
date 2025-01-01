@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Define the list of repositories
 REPOSITORIES = [
-    "/path/to/repo1",
+    "/Users/kencorey/Developer/gitautocommit",
     "/path/to/repo2",
     # Add more repository paths here
 ]
@@ -47,26 +47,16 @@ def push_changes(repo_path):
 
 # Main function to perform the updates and pushes
 def perform_updates():
-    for repo in REPOSITORIES:
-        print(f"Processing repository: {repo}")
-        update_file(repo)
-        push_changes(repo)
-
-# Schedule random updates throughout the day
-def schedule_updates():
-    num_commits = random.randint(1, 5)  # Generate 1-5 commits per day
-    intervals = sorted(random.sample(range(86400), num_commits))  # Generate random seconds in the day
-
-    for interval in intervals:
-        now = time.time()
-        next_commit_time = now + interval
-        sleep_duration = max(0, next_commit_time - now)
-
-        print(f"Next commit in {sleep_duration / 60:.2f} minutes")
-        time.sleep(sleep_duration)
-
-        perform_updates()
+    # 20% of the time, perform updates
+    if random.random() < 0.2:
+        print("Performing updates")
+        for repo in REPOSITORIES:
+            print(f"Processing repository: {repo}")
+            update_file(repo)
+            push_changes(repo)
+    else:
+        print("Skipping updates")
 
 if __name__ == "__main__":
-    schedule_updates()
+    perform_updates()
 
