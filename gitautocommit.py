@@ -70,7 +70,7 @@ def update_file(repo_path):
 
     # Commit the change
     commit_message = get_commit_message(repo_path)
-    run_command(["git", "commit", "-am", f'"{commit_message}"'], cwd=repo_path)
+    run_command(["git", "commit", "-am", f'''{commit_message}'''], cwd=repo_path)
 
 # Function to push changes
 def push_changes(repo_path):
