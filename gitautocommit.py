@@ -71,8 +71,8 @@ def update_file(repo_path):
 
     # Commit the change
     commit_message = get_commit_message(repo_path)
-    # Use shlex.quote to safely quote the commit message
-    safe_commit_message = shlex.quote(commit_message)
+    # Replace single quotes with escaped single quotes
+    safe_commit_message = commit_message.replace("'", "'\\''")
     run_command(["git", "commit", "-am", safe_commit_message], cwd=repo_path)
 
 # Function to push changes
