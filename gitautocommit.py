@@ -58,7 +58,7 @@ def update_file(repo_path):
 
     print(get_commit_message(repo_path))
     # Commit the change
-    run_command(["git", "commit", "-am", f"Update .UpdateStatus at {datetime.now()}"], cwd=repo_path)
+    run_command(["git", "commit", "-am", get_commit_message(repo_path)], cwd=repo_path)
 
 # Function to push changes
 def push_changes(repo_path):
