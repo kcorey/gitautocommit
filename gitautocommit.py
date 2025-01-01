@@ -28,6 +28,8 @@ def get_commit_message(repo_path):
 
     api_key=os.getenv("OPENAI_API_KEY")
 
+    print("api_key is ", api_key)
+    
     # if the api-key isn't found, we're going to have to generate a random one ourselves.
     if api_key is None:
         return generate_commit_message()
