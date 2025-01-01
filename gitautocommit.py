@@ -33,7 +33,7 @@ def get_commit_message(repo_path):
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a helpful assistant that generates commit messages for git repositories."},
-            {"role": "user", "content": f"Generate a commit message for the repository at {repo_path}. The message should sound technical, perhaps even a little cryptic, but definitely a comment a terse engineer would make.  Swearing and the odd joke are okay."}
+            {"role": "user", "content": f"Generate a brief commit message for the repository at {repo_path}. The message should sound technical, perhaps even a little cryptic, but definitely a comment a terse engineer would make. Refer to particular files and or particular modules. Swearing and the odd joke are okay."}
         ]
     )
     return response.choices[0].message.content
