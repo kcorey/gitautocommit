@@ -218,9 +218,6 @@ def generate_commit_message():
     
     return message
 
-# Example usage
-print(generate_commit_message())
-
 if __name__ == "__main__":
     perform_updates()
 
