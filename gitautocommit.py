@@ -45,7 +45,7 @@ def get_commit_message(repo_path):
                 {"role": "user", "content": f"Generate a brief commit message for the repository at {repo_path}. The message should sound technical, perhaps even a little cryptic, but definitely a comment a terse engineer would make. Refer to particular files and or particular modules. Swearing and the odd joke are okay."}
             ]
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content.strip("'\"")
     except Exception as e:
         print(f"Error generating commit message with OpenAI: {e}")
         return generate_commit_message()
