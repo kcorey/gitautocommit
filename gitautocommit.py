@@ -10,7 +10,7 @@ from datetime import datetime
 # Define the list of repositories
 REPOSITORIES = [
     "/Users/kencorey/Developer/gitautocommit",
-    "/path/to/repo2",
+    "/Users/kencorey/Developer/ShortUrl"
     # Add more repository paths here
 ]
 
