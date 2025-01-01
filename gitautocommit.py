@@ -51,9 +51,11 @@ def perform_updates():
     if random.random() < 0.2:
         print("Performing updates")
         for repo in REPOSITORIES:
-            print(f"Processing repository: {repo}")
-            update_file(repo)
-            push_changes(repo)
+            # check to see if the directory exists
+            if os.path.exists(repo):
+                print(f"Processing repository: {repo}")
+                update_file(repo)
+                push_changes(repo)
     else:
         print("Skipping updates")
 
