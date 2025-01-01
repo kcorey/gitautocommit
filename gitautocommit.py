@@ -25,13 +25,12 @@ def run_command(command, cwd=None):
 
 # Function to return a viable commit message that makes sense for this repository
 def get_commit_message(repo_path):
-
-    api_key=os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
 
     print("api_key is ", api_key)
     
-    # if the api-key isn't found, we're going to have to generate a random one ourselves.
-    if api_key is None:
+    # if the api-key isn't found or is an empty string, generate a random one ourselves.
+    if not api_key:
         return generate_commit_message()
 
     # Initialize the OpenAI client
