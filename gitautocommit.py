@@ -65,10 +65,15 @@ def update_file(repo_path):
         # Update the file if it exists
         with open(file_path, "r+") as f:
             content = f.read()
-            content = (content + " ")[:10]  # Append a space and truncate to 10 characters
+            content = content + " "  # Append a space
             f.seek(0)
-            f.write(content)
-            f.truncate()
+            f.write(content)  # Write the content back to the file
+            print(f"content is '{content}'")
+            if content.count(' ') > 10:  # Check if there are more than 10 spaces
+                print("Truncating file")
+                f.seek(0)
+                f.write(content[:1])  # Write only the first character
+                f.truncate()  # Truncate the file to the current position
 
     # Commit the change
     commit_message = get_commit_message(repo_path)
