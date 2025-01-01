@@ -96,7 +96,12 @@ TEMPLATES = [
     "Scrapped [one]. [expression of regret], [hope]. [Attempt at justification].",
     "Yanked [one]. [grumble], [fantasy fix]. [Snarky workaround].",
     "Punted [one]. [panic], [dream]. [Unconvincing excuse].",
-    "Axed [one]. [apology], [vague desire]. [Desperate plea for mercy]."
+    "Axed [one]. [apology], [vague desire]. [Desperate plea for mercy].",
+    "Added [one]. [expression of concern], [wish]. [Alternative solution].",
+    "Inserted [one]. [expression of regret], [hope]. [Attempt at justification].",
+    "Changed [one]. [grumble], [fantasy fix]. [Snarky workaround].",
+    "Modified [one]. [panic], [dream]. [Unconvincing excuse].",
+    "Updated [one]. [apology], [vague desire]. [Desperate plea for mercy]."
 ]
 
 # Define the lists of options for each placeholder
