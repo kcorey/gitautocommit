@@ -29,8 +29,6 @@ def run_command(command, cwd=None):
 def get_commit_message(repo_path):
     api_key = os.getenv("OPENAI_API_KEY")
 
-    print("api_key is ", api_key)
-    
     # if the api-key isn't found or is an empty string, generate a random one ourselves.
     if not api_key:
         return generate_commit_message()
@@ -68,9 +66,7 @@ def update_file(repo_path):
             content = content + " "  # Append a space
             f.seek(0)
             f.write(content)  # Write the content back to the file
-            print(f"content is '{content}'")
             if content.count(' ') > 10:  # Check if there are more than 10 spaces
-                print("Truncating file")
                 f.seek(0)
                 f.write(content[:1])  # Write only the first character
                 f.truncate()  # Truncate the file to the current position
