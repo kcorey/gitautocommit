@@ -15,6 +15,9 @@ REPOSITORIES = [
     # Add more repository paths here
 ]
 
+# Chance to create a new commit message
+CHANCE_CREATE_NEW_COMMIT_MESSAGE = 0.2
+
 # Function to execute shell commands
 def run_command(command, cwd=None):
     try:
@@ -83,7 +86,7 @@ def push_changes(repo_path):
 # Main function to perform the updates and pushes
 def perform_updates():
     # 20% of the time, perform updates
-    if random.random() < 0.2:
+    if random.random() < CHANCE_CREATE_NEW_COMMIT_MESSAGE:
         print("Performing updates")
         for repo in REPOSITORIES:
             # check to see if the directory exists
