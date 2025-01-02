@@ -7,7 +7,10 @@
     <array>
       <string>/usr/bin/python3</string>
       <!-- update so that the path is correct -->
-      <string>/Users/kencorey/Developer/gitautocommit/gitautocommit.py</string>
+      <string>/path/to/script/gitautocommit/gitautocommit.py</string>
+      <string>>></string>
+      <string>/path/to/script/gitautocommit/gitautocommit.log</string>
+      <string>2>&1</string>
     </array>
     <key>EnvironmentVariables</key>
     <dict>
