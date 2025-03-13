@@ -7,6 +7,7 @@ import subprocess
 from datetime import datetime
 import openai
 import shlex
+import requests  # Add this import for making HTTP requests to Ollama
 
 # Define the list of repositories
 REPOSITORIES = [
@@ -28,8 +29,36 @@ def run_command(command, cwd=None):
         print(f"Return code: {e.returncode}, Output: {e.stdout.strip()}")
         return None
 
+# Function to get commit message from Ollama
+def get_ollama_commit_message(repo_path):
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "gemma3:27b",
+                "prompt": f"Generate a brief commit message for the repository at {repo_path}. The message should sound technical, perhaps even a little cryptic, but definitely a comment a terse engineer would make. Refer to particular files and or particular modules. Swearing and the odd joke are okay. No explanations, just the comment.",
+                "stream": False
+            },
+            timeout=10
+        )
+        
+        if response.status_code == 200:
+            return response.json().get("response", "").strip("'\"")
+        else:
+            print(f"Ollama API returned status code {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"Error generating commit message with Ollama: {e}")
+        return None
+
 # Function to return a viable commit message that makes sense for this repository
 def get_commit_message(repo_path):
+    # First try Ollama
+    ollama_message = get_ollama_commit_message(repo_path)
+    if ollama_message:
+        return ollama_message
+        
+    # If Ollama fails, try OpenAI
     api_key = os.getenv("OPENAI_API_KEY")
 
     # if the api-key isn't found or is an empty string, generate a random one ourselves.
@@ -120,19 +149,19 @@ one_options = [
 expression_of_concern_options = [
     "This feels bad", "Not proud of this", "Uh, oops", "Honestly, I blame caffeine",
     "Might regret this later", "Definitely not ideal", "No promises this works",
-    "Feels illegal but here we are", "Just vibing", "I’ll explain if asked"
+    "Feels illegal but here we are", "Just vibing", "I'll explain if asked"
 ]
 
 wish_options = [
-    "Hope this sticks", "Please don’t break", "Maybe it just works", "Let this be the last time",
-    "Wish me luck", "Crossing fingers", "Nobody saw this", "Here’s hoping",
+    "Hope this sticks", "Please don't break", "Maybe it just works", "Let this be the last time",
+    "Wish me luck", "Crossing fingers", "Nobody saw this", "Here's hoping",
     "Just let it deploy", "We pray to the merge gods"
 ]
 
 alternative_solution_options = [
-    "Will write tests, maybe", "Could’ve added a hack but didn’t", "Revisit if on fire",
-    "We’ll see in prod", "Future me can suffer", "More duct tape next time",
-    "Will document eventually", "Slap some error handling", "Pretend it’s a feature",
+    "Will write tests, maybe", "Could've added a hack but didn't", "Revisit if on fire",
+    "We'll see in prod", "Future me can suffer", "More duct tape next time",
+    "Will document eventually", "Slap some error handling", "Pretend it's a feature",
     "Move fast, cry later"
 ]
 
