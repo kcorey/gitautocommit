@@ -43,7 +43,12 @@ def get_ollama_commit_message(repo_path):
         )
         
         if response.status_code == 200:
-            return response.json().get("response", "").strip("'\"")
+            message = response.json().get("response", "")
+            # Handle triple quotes by replacing them or using regex to remove them
+            if message.startswith("```") and message.endswith("```"):
+                message = message[3:-3]
+            # Still strip any remaining single or double quotes
+            return message.strip("'\"")
         else:
             print(f"Ollama API returned status code {response.status_code}")
             return None
