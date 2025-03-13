@@ -8,6 +8,7 @@ from datetime import datetime
 import openai
 import shlex
 import requests  # Add this import for making HTTP requests to Ollama
+import re
 
 # Define the list of repositories
 REPOSITORIES = [
@@ -44,14 +45,13 @@ def get_ollama_commit_message(repo_path):
         
         if response.status_code == 200:
             message = response.json().get("response", "")
-            # Handle triple backticks (markdown code blocks)
-            if message.startswith("```") and message.endswith("```"):
-                message = message[3:-3]
-            # Also handle triple single quotes if they appear
-            elif message.startswith("'''") and message.endswith("'''"):
-                message = message[3:-3]
-            # Still strip any remaining single or double quotes
-            return message.strip("'\"")
+            # Clean up the message - remove all instances of triple backticks
+            message = message.replace("```", "")
+            # Also remove any language identifiers that might appear after opening backticks
+            message = re.sub(r'^[a-z]+\n', '', message, flags=re.MULTILINE)
+            # Clean up any remaining quotes and whitespace
+            message = message.strip("'\"\n \t")
+            return message
         else:
             print(f"Ollama API returned status code {response.status_code}")
             return None
