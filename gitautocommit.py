@@ -36,7 +36,7 @@ def get_ollama_commit_message(repo_path):
         response = requests.post(
             "http://localhost:11434/api/generate",
             json={
-                "model": "gemma3:27b",
+                "model": "llama3",
                 "prompt": f"Generate a brief commit message for the repository at {repo_path}. The message should sound technical, perhaps even a little cryptic, but definitely a comment a terse engineer would make. Refer to particular files and or particular modules. Swearing and the odd joke are okay. No explanations, just the comment.",
                 "stream": False
             },
